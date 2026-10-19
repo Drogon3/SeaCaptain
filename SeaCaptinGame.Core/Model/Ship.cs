@@ -11,34 +11,40 @@ namespace SeaCaptinGame.Core.Model
     {
         public int X { get; private set; }
         public int Y { get; private set; }
-        private int _hp;
-        //private int _direction; // kierunek do celu może jak będzie mi sie chciało xd
-        private string _shipName;
-        private int _maxCargo;
-        public Ship(int x, int y, int hp, string shipName, int maxCargo)
+        //private int _hp = 100;
+        public string _shipName { get; private set; }
+        public int _maxCargo { get; private set; }
+        public Ship(int x, int y, string shipName)
         {
             X = x;
             Y = y;
-            _hp = hp;
             _shipName = shipName;
-            _maxCargo = maxCargo;
         }
+        public event Action<int, int, int, int>? Moved;
+        private void Move(int dx, int dy)
+        {
+            int oldX = X;
+            int oldY = Y;
+            X += dx;
+            Y += dy;
 
+            Moved?.Invoke(oldY, oldX, X, Y);
+        }
         public void N()
         {
-            Y -= 1;
+            Move(0, -1);
         }
         public void S()
         {
-            Y += 1;
+            Move(0, 1);
         }
         public void E()
         {
-            X += 1;
+            Move(1, 0);
         }
         public void W()
         {
-            X -= 1;
+            Move(-1, 0);
         }
     }
 }
