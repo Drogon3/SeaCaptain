@@ -32,9 +32,9 @@ public class ConsoleGameView : ISeaView
         throw new NotImplementedException();
     }
 
-    public string ReadShipName()
+    public string? ReadShipName()
     {
-        throw new NotImplementedException();
+        return _startView.ChooseShipAndName();
     }
 
     public void ShowMap()

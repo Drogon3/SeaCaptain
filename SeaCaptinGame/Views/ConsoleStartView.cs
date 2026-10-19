@@ -57,7 +57,53 @@ namespace SeaCaptinGame.Views
                     DrawMenuOption(options[prev], prev, false);
                 }
             }
+        }
+        public string? ChooseShipAndName()
+        {
+            int width = Console.WindowWidth;
+            int height = Console.WindowHeight;
 
+            Console.CursorVisible = false;
+            string text = "Wybierz statek i nadaj mu imie!";
+            ConsoleWriteAt.WriteAt(width / 2 - text.Length + 11, 10, text, ConsoleColor.DarkCyan);
+
+            ConsoleWriteAt.WriteAt(width / 2 - text.Length + 11, 11, "> ", ConsoleColor.DarkCyan);
+            Console.SetCursorPosition(width / 2 - text.Length + 13, 11);
+            Console.ResetColor();
+
+            StringBuilder sb = new StringBuilder();
+
+            while (true)
+            {
+                ConsoleKeyInfo info = Console.ReadKey(true);
+                switch (info.Key)
+                {
+                    case ConsoleKey.Enter:
+                        string shipName = sb.ToString().Trim();
+                        
+                        if (shipName.Length > 0)
+                            return shipName;
+                        
+                        string errorText = "Nazwa statku nie może być pusta.";
+                        ConsoleWriteAt.WriteAt(width / 2 - errorText.Length + 12, 12, errorText, ConsoleColor.Red);
+                        Console.SetCursorPosition(width / 2 - text.Length + 13, 11);
+                        Console.ResetColor();
+                        break;
+                    case ConsoleKey.Escape:
+                        return null;
+                    case ConsoleKey.Backspace:
+                        if(sb.Length > 0)
+                        {
+                            sb.Remove(sb.Length - 1, 1);
+                            Console.Write("\b \b");
+                        }
+                        break;
+                    default:
+                        sb.Append(info.KeyChar);
+                        Console.Write(info.KeyChar);
+                        break;
+                }
+            }
         }
         private string MenuOptions(MenuCommands option)
         {
@@ -78,11 +124,6 @@ namespace SeaCaptinGame.Views
                 isSelected
                 ? Console.ForegroundColor = ConsoleColor.Cyan
                 : Console.ForegroundColor = ConsoleColor.Gray);
-
-            //Console.WriteLine(MenuOptions(option), isSelected
-            //    ? Console.ForegroundColor = ConsoleColor.Cyan
-            //    : Console.ForegroundColor = ConsoleColor.Gray);
-            //Console.ResetColor();
         }
     }
 }
