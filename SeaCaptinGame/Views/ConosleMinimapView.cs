@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SeaCaptinGame.Views
 {
-    internal class ConosleMinimapView
+    public class ConosleMinimapView
     {
+        public void ShowMap()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace SeaCaptinGame.Views
             //Console.ForegroundColor = ConsoleColor.Cyan;
             //Console.WriteLine(title);
             //Console.ResetColor();
-            ConsoleWriteAt.WriteAt(width / 2 - title.Length, 5, title, ConsoleColor.Cyan);
+            ConsoleHelper.WriteAt(width / 2 - title.Length, 5, title, ConsoleColor.Cyan);
 
             int selected = 0;
 
@@ -66,9 +66,9 @@ namespace SeaCaptinGame.Views
 
             Console.CursorVisible = false;
             string text = "Wybierz statek i nadaj mu imie!";
-            ConsoleWriteAt.WriteAt(width / 2 - text.Length + 11, 10, text, ConsoleColor.DarkCyan);
+            ConsoleHelper.WriteAt(width / 2 - text.Length + 11, 10, text, ConsoleColor.DarkCyan);
 
-            ConsoleWriteAt.WriteAt(width / 2 - text.Length + 11, 11, "> ", ConsoleColor.DarkCyan);
+            ConsoleHelper.WriteAt(width / 2 - text.Length + 11, 11, "> ", ConsoleColor.DarkCyan);
             Console.SetCursorPosition(width / 2 - text.Length + 13, 11);
             Console.ResetColor();
 
@@ -86,7 +86,7 @@ namespace SeaCaptinGame.Views
                             return shipName;
                         
                         string errorText = "Nazwa statku nie może być pusta.";
-                        ConsoleWriteAt.WriteAt(width / 2 - errorText.Length + 12, 12, errorText, ConsoleColor.Red);
+                        ConsoleHelper.WriteAt(width / 2 - errorText.Length + 12, 12, errorText, ConsoleColor.Red);
                         Console.SetCursorPosition(width / 2 - text.Length + 13, 11);
                         Console.ResetColor();
                         break;
@@ -150,7 +150,7 @@ namespace SeaCaptinGame.Views
                 {
                     for (int i = 0; i < 10; i++)
                     {
-                        ConsoleWriteAt.WriteAt(width / 2 - 25, 12 + i, "                                      ", ConsoleColor.Gray);
+                        ConsoleHelper.WriteAt(width / 2 - 25, 12 + i, "                                      ", ConsoleColor.Gray);
                     }
                     DrawShipToChoose(shipsToChoose[selected].ship, width);
                 }
@@ -171,7 +171,7 @@ namespace SeaCaptinGame.Views
         private void DrawMenuOption(MenuCommands option, int row, bool isSelected)
         {
             string text = isSelected ? "~ " + MenuOptions(option) : "  " + MenuOptions(option);
-            ConsoleWriteAt.WriteAt(40, 7 + row, text,
+            ConsoleHelper.WriteAt(40, 7 + row, text,
                 isSelected
                 ? Console.ForegroundColor = ConsoleColor.Cyan
                 : Console.ForegroundColor = ConsoleColor.Gray);
@@ -186,7 +186,7 @@ namespace SeaCaptinGame.Views
             }
             for (int i = 0; i < ship.Length; i++)
             {
-                ConsoleWriteAt.WriteAt(width / 2 - max / 2 - 5, 12 + i, ship[i], ConsoleColor.Gray);
+                ConsoleHelper.WriteAt(width / 2 - max / 2 - 5, 12 + i, ship[i], ConsoleColor.Gray);
             }
         }
     }

@@ -11,8 +11,7 @@ public class Program
     {
         string path = Path.Combine(AppContext.BaseDirectory, "Data", "map3.txt");
         GameMap gameMap = GameMap.FromFile(path);
-        //Ship ship = new Ship(gameMap.StartX, gameMap.StartY, "Sea Snake");
-        ISeaView view = new ConsoleGameView();
+        ISeaView view = new ConsoleSeaView();
         new GameController(view, gameMap).Run();
     }
 }
