@@ -11,7 +11,10 @@ namespace SeaCaptinGame.Core.View
     public interface ISeaView
     {
         MenuCommands ShowStartMenu();
-        string ReadShipName();
+        string? ReadShipName();
+        ShipType? ReadShipType();
+
+
         void Init(GameMap gameMap, Ship ship);
         void ShowMap();
         GameCommands ReadCommand();

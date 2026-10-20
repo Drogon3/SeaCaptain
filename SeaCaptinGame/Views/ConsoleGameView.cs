@@ -31,19 +31,15 @@ public class ConsoleGameView : ISeaView
     {
         throw new NotImplementedException();
     }
+    public MenuCommands ShowStartMenu() =>  _startView.ShowMenu();
+    public string? ReadShipName() => _startView.ChooseShipName();
+    public ShipType? ReadShipType() => _startView.ChooseShipType();
 
-    public string? ReadShipName()
-    {
-        return _startView.ChooseShipAndName();
-    }
 
     public void ShowMap()
     {
         throw new NotImplementedException();
     }
 
-    public MenuCommands ShowStartMenu()
-    {
-        return _startView.ShowMenu();
-    }
+
 }

@@ -23,15 +23,18 @@ namespace SeaCaptinGame.Core.Controller
 
         public void Run()
         {
-            string shipName = RunStartScreen();
-            if (shipName == null)
+            var start = RunStartScreen();
+            if (start == null)
             {
                _seaView.Close();
                 return;
             }
-            _ship = new Ship(_gameMap.StartX, _gameMap.StartY, shipName);
 
+            (ShipType shipType, string shipName) = start.Value;
+
+            _ship = new Ship(_gameMap.StartX, _gameMap.StartY, shipName, shipType);
             _seaView.Init(_gameMap, _ship);
+
             bool running = true;
             while (running)
             {
@@ -67,20 +70,20 @@ namespace SeaCaptinGame.Core.Controller
             }
             _seaView.Close();
         }
-        private string RunStartScreen()
+        private (ShipType, string)? RunStartScreen()
         {
             while (true)
             {
                 MenuCommands option = _seaView.ShowStartMenu();
-                if(option == MenuCommands.Quit)
-                {
+                if (option == MenuCommands.Quit)
                     return null;
-                }
-                string shipName = _seaView.ReadShipName();
-                if(shipName != null)
-                {
-                    return shipName;
-                }
+
+                string? shipName = _seaView.ReadShipName();
+                ShipType? shipType = _seaView.ReadShipType();
+
+                if (shipName != null && shipType != null)
+                    return (shipType.Value, shipName);
+
             }
         }
     }

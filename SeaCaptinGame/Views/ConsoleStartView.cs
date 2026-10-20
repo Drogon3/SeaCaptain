@@ -1,4 +1,5 @@
 ﻿using SeaCaptinGame.Core.Command;
+using SeaCaptinGame.Core.Model;
 using SeaCaptinGame.Core.View;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace SeaCaptinGame.Views
                 }
             }
         }
-        public string? ChooseShipAndName()
+        public string? ChooseShipName()
         {
             int width = Console.WindowWidth;
             int height = Console.WindowHeight;
@@ -105,6 +106,56 @@ namespace SeaCaptinGame.Views
                 }
             }
         }
+
+        public ShipType? ChooseShipType()
+        {
+            int width = Console.WindowWidth;
+            int height = Console.WindowHeight;
+
+            int selected = 0;
+            ShipType[] types = (ShipType[])Enum.GetValues(typeof(ShipType));
+
+            string path = Path.Combine(AppContext.BaseDirectory, "Assets/Ships");
+            var shipFiles = Directory.GetFiles(path, "*.txt");
+            var shipsToChoose = new List<(string fileName, string[] ship)>();
+
+            foreach(string shipFile in shipFiles)
+            {
+                string shipName = Path.GetFileNameWithoutExtension(shipFile);
+                string[] shipFields = File.ReadAllLines(shipFile);
+                
+                shipsToChoose.Add((shipName, shipFields));
+            }
+            DrawShipToChoose(shipsToChoose[selected].ship, width);
+
+            while (true)
+            {
+                ConsoleKey key = Console.ReadKey(true).Key;
+                int prev = selected;
+
+                switch (key)
+                {
+                    case ConsoleKey.A:
+                        selected = (selected + shipsToChoose.Count - 1) % shipsToChoose.Count;
+                        break;
+                    case ConsoleKey.D:
+                        selected = (selected + 1) % shipsToChoose.Count;
+                        break;
+                    case ConsoleKey.Enter:
+                        return types[selected];
+                    case ConsoleKey.Escape:
+                        return null;
+                }
+                if (prev != selected)
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        ConsoleWriteAt.WriteAt(width / 2 - 25, 12 + i, "                                      ", ConsoleColor.Gray);
+                    }
+                    DrawShipToChoose(shipsToChoose[selected].ship, width);
+                }
+            }
+        }
         private string MenuOptions(MenuCommands option)
         {
             switch (option)
@@ -124,6 +175,19 @@ namespace SeaCaptinGame.Views
                 isSelected
                 ? Console.ForegroundColor = ConsoleColor.Cyan
                 : Console.ForegroundColor = ConsoleColor.Gray);
+        }
+
+        private void DrawShipToChoose(string[] ship, int width)
+        {
+            int max = 0;
+            foreach (string line in ship)
+            {
+                if (line.Length > max) max = line.Length;
+            }
+            for (int i = 0; i < ship.Length; i++)
+            {
+                ConsoleWriteAt.WriteAt(width / 2 - max / 2 - 5, 12 + i, ship[i], ConsoleColor.Gray);
+            }
         }
     }
 }
