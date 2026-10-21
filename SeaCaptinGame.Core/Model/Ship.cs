@@ -20,7 +20,7 @@ namespace SeaCaptinGame.Core.Model
         //private int _hp = 100;
         public string _shipName { get; private set; }
         public int _maxCargo { get; private set; }
-        private ShipType _shipType { get; set; }
+        public ShipType _shipType { get; }
 
         public Ship(int x, int y, string shipName, ShipType shipType)
         {

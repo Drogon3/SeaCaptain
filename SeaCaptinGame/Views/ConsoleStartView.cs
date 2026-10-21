@@ -11,7 +11,7 @@ namespace SeaCaptinGame.Views
 {
     public class ConsoleStartView
     {
-        private ConsoleShipView _shipView;
+        //private ConsoleShipView _shipView;
 
         public MenuCommands ShowMenu()
         {

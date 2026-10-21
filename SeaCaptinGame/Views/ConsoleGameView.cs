@@ -4,6 +4,7 @@ using SeaCaptinGame.Core.View;
 using Spectre.Console.Rendering;
 using System;
 using System.Data;
+using System.Dynamic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -16,22 +17,30 @@ public class ConsoleGameView
 
     private GameMap _gameMap;
     private Ship _ship;
+    private ShipType _shipType;
+    private string[] _shipFile;
 
     private int _width, _height;
 
-    public ConsoleGameView()
+    private Pixel[,] _currentFrame = new Pixel[0, 0];
+    private Pixel[,] _nextFrame = new Pixel[0, 0];
+    private struct Pixel
     {
-        _startView = new ConsoleStartView();
+        public char symbol;
+        public ConsoleColor color;
     }
 
     public void Init(GameMap gameMap, Ship ship)
     {
         _gameMap = gameMap;
         _ship = ship;
-        // Dodanie typu statku
+        _shipType = ship._shipType;
+        _shipFile = GetShipLines(_shipType);
 
         Console.CursorVisible = false;
         Console.Clear();
+
+        CalculateLayout();
         _ship.Moved += OnShipMoved;
         Render();
     }
@@ -46,10 +55,11 @@ public class ConsoleGameView
     }
     private void CalculateLayout()
     {
-        int width = Console.WindowWidth;
-        int height = Console.WindowHeight;
+        _width = Console.WindowWidth;
+        _height = Console.WindowHeight;
         
-
+        _currentFrame = new Pixel[_height, _width];
+        _nextFrame = new Pixel[_height, _width];
     }
     private void Render()
     {
@@ -60,9 +70,108 @@ public class ConsoleGameView
             CalculateLayout();
         }
 
-        //BuildFrame();
-        //Flush();
-        //DrawHud();
+        BuildFrame();
+        Flush();
+        //DrawInfo();
+    }
+
+    private void BuildFrame()
+    {
+        int centerX = _width / 2;
+        int centerY = _height / 2;
+
+        for(int  i = 0; i < _height; i++)
+        {
+            for(int j = 0; j < _width; j++)
+            {
+                int worldX = _ship.X - centerX + j;
+                int worldY = _ship.Y - centerY + i;
+
+                (char mapElement, ConsoleColor colorElement) = GetSymbolData(worldX, worldY);
+                _nextFrame[i, j] = new Pixel { symbol = mapElement, color = colorElement };
+            }
+        }
+        DrawShip(centerX, centerY);
+    }
+    private void DrawShip(int anchorX, int anchorY)
+    {
+        int max = 0;
+        foreach(string line in _shipFile)
+        {
+            if(line.Length > max) max = line.Length;
+        }
+
+        int left = anchorX - max / 2;
+        int top = anchorY - _shipFile.Length - 1;
+
+        for (int i = 0; i < _shipFile.Length; i++)
+        {
+            int y = top + i;
+            string line = _shipFile[i];
+            for (int j = 0; j < line.Length; j++)
+            {
+                if (line[j] == ' ') continue;
+
+                int x = left + j;
+
+                _nextFrame[y, x] = new Pixel { symbol = line[j], color = ConsoleColor.Gray };
+
+            }
+        }
+    }
+
+    private (char, ConsoleColor) GetSymbolData(int worldX, int worldY)
+    {
+        char symbol = _gameMap.GetSymbol(worldX, worldY);
+        return (symbol, ColorFor(symbol));
+    }
+
+    private string[] GetShipLines(ShipType shipType)
+    {
+        Dictionary<ShipType, string[]> shipFiles= new();
+
+        string path = Path.Combine(AppContext.BaseDirectory, "Assets", "Ships", shipType + ".txt");
+        string[] lines = File.ReadAllLines(path);
+
+        //shipFiles[shipType] = lines;
+        //Console.WriteLine(lines.Length);
+        return lines;
+    }
+
+    private void Flush()
+    {
+        for (int y = 0; y < _height; y++)
+        {
+            int x = 0;
+            while (x < _width)
+            {
+                if (IsSame(_currentFrame[y, x], _nextFrame[y, x]))
+                {
+                    x++;
+                    continue;
+                }
+
+                ConsoleColor color = _nextFrame[y, x].color;
+                int start = x;
+                var sb = new StringBuilder();
+
+                while (x < _width && !IsSame(_currentFrame[y, x], _nextFrame[y, x]) && _nextFrame[y, x].color == color)
+                {
+                    sb.Append(_nextFrame[y, x].symbol);
+                    _currentFrame[y, x] = _nextFrame[y, x];
+                    x++;
+                }
+
+                Console.SetCursorPosition(start, y);
+                Console.ForegroundColor = color;
+                Console.Write(sb.ToString());
+            }
+        }
+        Console.ResetColor();
+    }
+    private bool IsSame(Pixel x, Pixel y)
+    {
+        return (x.symbol == y.symbol && x.color == y.color);
     }
 
     private static ConsoleColor ColorFor(char symbol)
