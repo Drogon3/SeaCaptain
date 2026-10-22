@@ -15,12 +15,14 @@ namespace SeaCaptinGame.Views
         private ConsoleStartView _startView;
         private ConsoleGameView _gameView;
         private ConosleMinimapView _mapView;
+        private ConsoleCargoView _cargoView;
 
         public ConsoleSeaView()
         {
             _startView = new ConsoleStartView();
             _gameView = new ConsoleGameView();
             _mapView = new ConosleMinimapView();
+            _cargoView = new ConsoleCargoView();
         }
 
         public MenuCommands ShowStartMenu() => _startView.ShowMenu();
@@ -32,6 +34,11 @@ namespace SeaCaptinGame.Views
         public void ShowMap()
         {
             _mapView.ShowMap();
+            _gameView.Redraw();
+        }
+        public void ShowCargo()
+        {
+            _cargoView.ShowCargo();
             _gameView.Redraw();
         }
         public void Close() => _gameView.Close();

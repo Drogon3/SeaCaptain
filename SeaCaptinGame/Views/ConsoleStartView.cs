@@ -11,8 +11,6 @@ namespace SeaCaptinGame.Views
 {
     public class ConsoleStartView
     {
-        //private ConsoleShipView _shipView;
-
         public MenuCommands ShowMenu()
         {
             Console.CursorVisible = false;

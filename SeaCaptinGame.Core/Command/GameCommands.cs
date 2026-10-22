@@ -13,6 +13,7 @@ namespace SeaCaptinGame.Core.Command
         South,
         East,
         West,
+        Dock,
         Cargo,
         Map,
         Quit

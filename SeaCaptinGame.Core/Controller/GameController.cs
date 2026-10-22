@@ -57,8 +57,11 @@ namespace SeaCaptinGame.Core.Controller
                         if (_gameMap.IsWater(_ship.X - (_ship._shipDraft / 2 + 1) - 1, _ship.Y))
                             _ship.W();
                         break;
+                    case GameCommands.Dock:
+                        // Dock 
+                        break;
                     case GameCommands.Cargo:
-                        // open cargo
+                        _seaView.ShowCargo();
                         break;
                     case GameCommands.Map:
                         _seaView.ShowMap();

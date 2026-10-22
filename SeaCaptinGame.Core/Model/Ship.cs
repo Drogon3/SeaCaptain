@@ -21,9 +21,11 @@ namespace SeaCaptinGame.Core.Model
 
         //private int _hp = 100;
         public string _shipName { get; private set; }
-        public int _maxCargo { get; private set; }        
+        public int _maxCargo { get; private set; }  
+        public float _coins { get; private set; }        
         public int _shipDraft { get; private set; } // zanurzona część statku 
         public ShipType _shipType { get; }
+        public List<(Item, int)> _cargo { get; set; }
 
         public Ship(int x, int y, string shipName, ShipType shipType, int shipDraft)
         {
@@ -32,6 +34,7 @@ namespace SeaCaptinGame.Core.Model
             _shipName = shipName;
             _shipType = shipType;
             _shipDraft = shipDraft;
+            _coins = 100;
 
             switch (shipType)
             {
