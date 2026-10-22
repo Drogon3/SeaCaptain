@@ -71,8 +71,8 @@ public class ConsoleGameView
         }
 
         BuildFrame();
+        DrawInfo($"{_ship._shipName} | Współrzędne: {_ship.X}, {_ship.Y} | Cargo: {_ship._maxCargo}");
         Flush();
-        //DrawInfo();
     }
 
     private void BuildFrame()
@@ -92,7 +92,6 @@ public class ConsoleGameView
             }
         }
         DrawShip(centerX, centerY);
-        DrawInfo($"{_ship._shipName} | Współrzędne: {_ship.X}, {_ship.Y} | Cargo: {_ship._maxCargo}");
     }
     private void DrawShip(int anchorX, int anchorY)
     {
@@ -191,15 +190,16 @@ public class ConsoleGameView
         {
             for(int j = 1; j < _width - 1; j++)
             {
-                _nextFrame[i, j] = new Pixel { symbol = text[pom], color = ConsoleColor.Gray };
-                pom++;
-
-                if (pom == text.Length)
-                    goto BottomFrame;
+                if(countChar < text.Length)
+                {
+                    _nextFrame[i, j] = new Pixel { symbol = text[countChar], color = ConsoleColor.Gray };
+                    countChar++;
+                }
+                else
+                    _nextFrame[i, j] = new Pixel { symbol = ' ', color = ConsoleColor.Gray };
             }
         }
 
-        BottomFrame:
         _nextFrame[_height - 1, 0] = new Pixel { symbol = '+', color = ConsoleColor.Gray };
         for (int i = 1; i < _width; i++)
         {
