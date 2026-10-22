@@ -14,5 +14,7 @@ namespace SeaCaptinGame.Views
             Console.ForegroundColor = color;
             Console.Write(text);
         }
+
+        public static int HeightForText(string text, int width) => text.Length / (width - 4);
     }
 }

@@ -92,6 +92,7 @@ public class ConsoleGameView
             }
         }
         DrawShip(centerX, centerY);
+        DrawInfo($"{_ship._shipName} | Współrzędne: {_ship.X}, {_ship.Y} | Cargo: {_ship._maxCargo}");
     }
     private void DrawShip(int anchorX, int anchorY)
     {
@@ -115,10 +116,9 @@ public class ConsoleGameView
                 int x = left + j;
 
                 _nextFrame[y, x] = new Pixel { symbol = line[j], color = ConsoleColor.Gray };
-
             }
         }
-        _nextFrame[anchorY, anchorX] = new Pixel { symbol = '@', color = ConsoleColor.Red };
+        //_nextFrame[anchorY, anchorX] = new Pixel { symbol = '@', color = ConsoleColor.Red };
     }
 
     private (char, ConsoleColor) GetSymbolData(int worldX, int worldY)
@@ -175,6 +175,38 @@ public class ConsoleGameView
         return (x.symbol == y.symbol && x.color == y.color);
     }
 
+    private void DrawInfo(string text)
+    {
+        int h = ConsoleHelper.HeightForText(text, _width) + 2;
+        int countChar = 0;
+
+        _nextFrame[_height - 1 - h, 0] = new Pixel { symbol = '+', color = ConsoleColor.Gray };
+        for (int i = 1; i < _width; i++)
+        {
+            _nextFrame[_height - 1 - h, i] = new Pixel { symbol = '-', color = ConsoleColor.Gray };
+        }
+        _nextFrame[_height - 1 - h, _width - 1] = new Pixel { symbol = '+', color = ConsoleColor.Gray };
+
+        for(int i = _height - h; i < _height - 1; i++)
+        {
+            for(int j = 1; j < _width - 1; j++)
+            {
+                _nextFrame[i, j] = new Pixel { symbol = text[pom], color = ConsoleColor.Gray };
+                pom++;
+
+                if (pom == text.Length)
+                    goto BottomFrame;
+            }
+        }
+
+        BottomFrame:
+        _nextFrame[_height - 1, 0] = new Pixel { symbol = '+', color = ConsoleColor.Gray };
+        for (int i = 1; i < _width; i++)
+        {
+            _nextFrame[_height - 1, i] = new Pixel { symbol = '-', color = ConsoleColor.Gray };
+        }
+        _nextFrame[_height - 1, _width - 1] = new Pixel { symbol = '+', color = ConsoleColor.Gray };
+    }
     private static ConsoleColor ColorFor(char symbol)
     {
         switch (symbol)
@@ -186,7 +218,7 @@ public class ConsoleGameView
             case ']': return ConsoleColor.Yellow;
             case '/': return ConsoleColor.Red;
             case '\\': return ConsoleColor.Red;
-            case '-': return ConsoleColor.DarkRed;
+            //case '-': return ConsoleColor.DarkRed;
             case '0': return ConsoleColor.DarkGreen;
             default: return ConsoleColor.Gray;
         }
