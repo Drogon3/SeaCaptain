@@ -13,9 +13,9 @@ namespace SeaCaptinGame.Views;
 
 public class ConsoleGameView
 {
-    private ConsoleStartView _startView;
 
     private GameMap _gameMap;
+
     private Ship _ship;
     private ShipType _shipType;
     private string[] _shipFile;
@@ -102,7 +102,7 @@ public class ConsoleGameView
         }
 
         int left = anchorX - max / 2;
-        int top = anchorY - _shipFile.Length - 1;
+        int top = anchorY - _shipFile.Length + 1;
 
         for (int i = 0; i < _shipFile.Length; i++)
         {
@@ -118,6 +118,7 @@ public class ConsoleGameView
 
             }
         }
+        _nextFrame[anchorY, anchorX] = new Pixel { symbol = '@', color = ConsoleColor.Red };
     }
 
     private (char, ConsoleColor) GetSymbolData(int worldX, int worldY)

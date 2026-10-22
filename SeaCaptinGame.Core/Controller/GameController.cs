@@ -30,9 +30,9 @@ namespace SeaCaptinGame.Core.Controller
                 return;
             }
 
-            (ShipType shipType, string shipName) = start.Value;
+            (ShipType shipType, int shipDraft, string shipName) = start.Value;
 
-            _ship = new Ship(_gameMap.StartX, _gameMap.StartY, shipName, shipType);
+            _ship = new Ship(_gameMap.StartX, _gameMap.StartY, shipName, shipType, shipDraft);
             _seaView.Init(_gameMap, _ship);
 
             bool running = true;
@@ -50,11 +50,11 @@ namespace SeaCaptinGame.Core.Controller
                             _ship.S();
                         break;
                     case GameCommands.East:
-                        if (_gameMap.IsWater(_ship.X + 1, _ship.Y))
+                        if (_gameMap.IsWater(_ship.X + (_ship._shipDraft / 2 + 1) + 1, _ship.Y))
                             _ship.E();
                         break;
                     case GameCommands.West:
-                        if (_gameMap.IsWater(_ship.X - 1, _ship.Y))
+                        if (_gameMap.IsWater(_ship.X - (_ship._shipDraft / 2 + 1) - 1, _ship.Y))
                             _ship.W();
                         break;
                     case GameCommands.Cargo:
@@ -70,7 +70,7 @@ namespace SeaCaptinGame.Core.Controller
             }
             _seaView.Close();
         }
-        private (ShipType, string)? RunStartScreen()
+        private (ShipType, int, string)? RunStartScreen()
         {
             while (true)
             {
@@ -79,11 +79,16 @@ namespace SeaCaptinGame.Core.Controller
                     return null;
 
                 string? shipName = _seaView.ReadShipName();
-                ShipType? shipType = _seaView.ReadShipType();
 
-                if (shipName != null && shipType != null)
-                    return (shipType.Value, shipName);
+                (ShipType, int)? ship = _seaView.ReadShipType();
+                if (ship == null)
+                    return null;
 
+                if(shipName != null)
+                {
+                    (ShipType shipType, int shipDraft) = ship.Value;
+                        return (shipType, shipDraft, shipName);
+                }
             }
         }
     }

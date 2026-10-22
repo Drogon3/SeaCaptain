@@ -9,25 +9,29 @@ namespace SeaCaptinGame.Core.Model
 {
     public enum ShipType
     {
-        BigShip,
         BasicShip,
-        Kayak
+        BigShip,
+        Kayak,
+        Student
     }
     public class Ship
     {
         public int X { get; private set; }
         public int Y { get; private set; }
+
         //private int _hp = 100;
         public string _shipName { get; private set; }
-        public int _maxCargo { get; private set; }
+        public int _maxCargo { get; private set; }        
+        public int _shipDraft { get; private set; } // zanurzona część statku 
         public ShipType _shipType { get; }
 
-        public Ship(int x, int y, string shipName, ShipType shipType)
+        public Ship(int x, int y, string shipName, ShipType shipType, int shipDraft)
         {
             X = x;
             Y = y;
             _shipName = shipName;
             _shipType = shipType;
+            _shipDraft = shipDraft;
 
             switch (shipType)
             {
@@ -39,6 +43,9 @@ namespace SeaCaptinGame.Core.Model
                     break;
                 case ShipType.Kayak:
                     _maxCargo = 20;
+                    break;
+                case ShipType.Student:
+                    _maxCargo = 10;
                     break;
             }
         }

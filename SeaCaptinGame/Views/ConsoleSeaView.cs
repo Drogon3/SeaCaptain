@@ -25,7 +25,7 @@ namespace SeaCaptinGame.Views
 
         public MenuCommands ShowStartMenu() => _startView.ShowMenu();
         public string? ReadShipName() => _startView.ChooseShipName();
-        public ShipType? ReadShipType() => _startView.ChooseShipType();
+        public (ShipType, int)? ReadShipType() => _startView.ChooseShipType();
 
         public void Init(GameMap map, Ship ship) => _gameView.Init(map, ship);
         public GameCommands ReadCommand() => _gameView.ReadCommand();

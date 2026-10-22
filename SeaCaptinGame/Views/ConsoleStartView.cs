@@ -107,7 +107,7 @@ namespace SeaCaptinGame.Views
             }
         }
 
-        public ShipType? ChooseShipType()
+        public (ShipType, int)? ChooseShipType()
         {
             int width = Console.WindowWidth;
             int height = Console.WindowHeight;
@@ -142,7 +142,8 @@ namespace SeaCaptinGame.Views
                         selected = (selected + 1) % shipsToChoose.Count;
                         break;
                     case ConsoleKey.Enter:
-                        return types[selected];
+                        int shipDraft = CountDraftLenght(shipsToChoose[selected].ship);
+                        return (types[selected], shipDraft);
                     case ConsoleKey.Escape:
                         return null;
                 }
@@ -188,6 +189,15 @@ namespace SeaCaptinGame.Views
             {
                 ConsoleHelper.WriteAt(width / 2 - max / 2 - 5, 12 + i, ship[i], ConsoleColor.Gray);
             }
+        }
+        private int CountDraftLenght(string[] ship) {
+            int count = 0;
+            for(int i=0; i< ship[^1].Length; i++)
+            {
+                if (ship[^1][i] != ' ') count++;
+            }
+            return count;
+
         }
     }
 }
