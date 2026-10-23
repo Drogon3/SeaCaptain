@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Wieża",
+    "x": 19,
+    "y": 71,
+    "range": 2,
+    "priceFactor": 1.2,
+    "itemsForSale": [ 3 ],
+    "itemsToBuy": [ 1, 4 ]
+  },
+  {
+    "name": "Kocia Wróżka",
+    "x": 102,
+    "y": 124,
+    "range": 2,
+    "priceFactor": 1.5,
+    "itemsForSale": [ 2 ],
+    "itemsToBuy": [ 3, 5 ]
+  },
+  {
+    "name": "Zatoka kupców",
+    "x": 50,
+    "y": 317,
+    "range": 2,
+    "priceFactor": 0.9,
+    "itemsForSale": [ 1, 4, 5 ],
+    "itemsToBuy": [ 2, 3 ]
+  },
+  {
+    "name": "Port",
+    "x": 50,
+    "y": 187,
+    "range": 2,
+    "priceFactor": 1.0,
+    "itemsForSale": [ 1, 2, 4 ],
+    "itemsToBuy": [ 3, 5 ]
+  }
+]

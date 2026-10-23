@@ -71,7 +71,7 @@ public class ConsoleGameView
         }
 
         BuildFrame();
-        DrawInfo($"{_ship._shipName} | Współrzędne: {_ship.X}, {_ship.Y} | Cargo: {_ship._maxCargo}");
+        DrawInfo($"{_ship._shipName} | Współrzędne: {_ship.X}, {_ship.Y} | Ładunek: {_ship._currentCargo} / {_ship._maxCargo}");
         Flush();
     }
 

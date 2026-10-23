@@ -22,10 +22,11 @@ namespace SeaCaptinGame.Core.Model
         //private int _hp = 100;
         public string _shipName { get; private set; }
         public int _maxCargo { get; private set; }  
+        public int _currentCargo { get; private set; }  
         public float _coins { get; private set; }        
         public int _shipDraft { get; private set; } // zanurzona część statku 
         public ShipType _shipType { get; }
-        public List<(Item, int)> _cargo { get; set; }
+        public List<(Item item, int number)> _cargo { get; set; }
 
         public Ship(int x, int y, string shipName, ShipType shipType, int shipDraft)
         {
@@ -35,23 +36,40 @@ namespace SeaCaptinGame.Core.Model
             _shipType = shipType;
             _shipDraft = shipDraft;
             _coins = 100;
+            _currentCargo = 0;
 
             switch (shipType)
             {
                 case ShipType.BigShip:
-                    _maxCargo = 150;
+                    _maxCargo = 250;
                     break;
                 case ShipType.BasicShip:
-                    _maxCargo = 70;
+                    _maxCargo = 150;
                     break;
                 case ShipType.Kayak:
-                    _maxCargo = 20;
+                    _maxCargo = 100;
                     break;
                 case ShipType.Student:
-                    _maxCargo = 10;
+                    _maxCargo = 50;
                     break;
             }
         }
+        public void CountCurrentCargo()
+        {
+            _currentCargo = 0;
+            for(int i = 0; i < _cargo.Count; i++)
+            {
+                _currentCargo += (_cargo[i].item._weight * _cargo[i].number);
+            }
+        }
+
+        public bool CanAdd(Item item, int number)
+        {
+            int fullWeight = number * item._weight;
+            CountCurrentCargo();
+            return (fullWeight + _currentCargo <= _maxCargo && number > 0);
+        }
+
         public event Action<int, int, int, int>? Moved;
         private void Move(int dx, int dy)
         {

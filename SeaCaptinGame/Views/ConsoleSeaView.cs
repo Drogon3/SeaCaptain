@@ -36,9 +36,9 @@ namespace SeaCaptinGame.Views
             _mapView.ShowMap();
             _gameView.Redraw();
         }
-        public void ShowCargo()
+        public void ShowCargo(Ship ship)
         {
-            _cargoView.ShowCargo();
+            _cargoView.ShowCargo(ship);
             _gameView.Redraw();
         }
         public void Close() => _gameView.Close();

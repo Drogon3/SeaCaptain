@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeaCaptinGame.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,20 @@ namespace SeaCaptinGame.Views
         }
 
         public static int HeightForText(string text, int width) => text.Length / (width - 4);
+
+        public static string ColorItemRarity(Rarity rarity, string itemName)
+        {
+            switch (rarity)
+            {
+                case Rarity.Common:
+                    return $"[green]{itemName}[/]";
+                case Rarity.Rare:
+                    return $"[blue]{itemName}[/]";
+                case Rarity.Epic:
+                    return $"[Purple]{itemName}[/]";
+                default:
+                    return itemName;
+            }
+        }
     }
 }

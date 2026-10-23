@@ -6,19 +6,27 @@ using System.Threading.Tasks;
 
 namespace SeaCaptinGame.Core.Model
 {
+    public enum Rarity
+    {
+        Common,
+        Rare,
+        Epic
+    }
     public class Item
     {
         private int _idItem;
         public string _itemName { get; }
         public float _baseValue { get; }
-        private int _weight;
+        public int _weight { get; }
+        public Rarity _rarity { get; }
 
-        public Item(int idItem, string itemName, int baseValue, int weight)
+        public Item(int idItem, string itemName, int baseValue, int weight, Rarity rarity)
         {
             _idItem = idItem;
             _itemName = itemName;
             _baseValue = baseValue;
             _weight = weight;
+            _rarity = rarity;
         }
     }
 }

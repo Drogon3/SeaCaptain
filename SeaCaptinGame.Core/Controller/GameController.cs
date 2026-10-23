@@ -58,10 +58,11 @@ namespace SeaCaptinGame.Core.Controller
                             _ship.W();
                         break;
                     case GameCommands.Dock:
-                        // Dock 
+                        //if ()
+                        //_seaView.ShowStock(_ship);
                         break;
                     case GameCommands.Cargo:
-                        _seaView.ShowCargo();
+                        _seaView.ShowCargo(_ship);
                         break;
                     case GameCommands.Map:
                         _seaView.ShowMap();
