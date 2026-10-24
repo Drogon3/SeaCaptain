@@ -14,7 +14,7 @@ namespace SeaCaptinGame.Core.Controller
         private Ship _ship;
         private ISeaView _seaView;
         private GameMap _gameMap;
-
+        private List<Island> _islandList;
         public GameController(ISeaView seaView, GameMap gameMap)
         {
             _seaView = seaView;

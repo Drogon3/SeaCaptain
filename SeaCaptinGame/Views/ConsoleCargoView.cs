@@ -31,10 +31,10 @@ namespace SeaCaptinGame.Views
                 for (int i = 0; i < itemList.Count; i++)
                 {
                     Item item = itemList[i].item;
-                    cargoTable.AddRow(ConsoleHelper.ColorItemRarity(item._rarity, item._itemName),
+                    cargoTable.AddRow(ConsoleHelper.ColorItemRarity(item.rarity, item.itemName),
                         itemList[i].number.ToString(),
-                        item._weight.ToString(),
-                        (item._weight * itemList[i].number).ToString());
+                        item.weight.ToString(),
+                        (item.weight * itemList[i].number).ToString());
                 }
             }
             

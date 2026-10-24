@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SeaCaptinGame.Core.Model
@@ -14,19 +16,40 @@ namespace SeaCaptinGame.Core.Model
     }
     public class Item
     {
-        private int _idItem;
-        public string _itemName { get; }
-        public float _baseValue { get; }
-        public int _weight { get; }
-        public Rarity _rarity { get; }
+        public int idItem { get; init; }
+        public string itemName { get; init; }
+        public double baseValue { get; init; }
+        public int weight { get; init; }
+        public Rarity rarity { get; init; }
 
-        public Item(int idItem, string itemName, int baseValue, int weight, Rarity rarity)
+        public Item(int idItem, string itemName, double baseValue, int weight, Rarity rarity)
         {
-            _idItem = idItem;
-            _itemName = itemName;
-            _baseValue = baseValue;
-            _weight = weight;
-            _rarity = rarity;
+            this.idItem = idItem;
+            this.itemName = itemName;
+            this.baseValue = baseValue;
+            this.weight = weight;
+            this.rarity = rarity;
+        }
+
+        public static Dictionary<int, Item> LoadFromFile(string path)
+        {
+            if (!File.Exists(path))
+                throw new FileNotFoundException("Brak pliku z itemkami w podanej ścieżce.");
+
+            var options = new JsonSerializerOptions { 
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+
+            List<Item>? data = JsonSerializer.Deserialize<List<Item>>(File.ReadAllText(path), options);
+            var items = new Dictionary<int, Item>();
+
+            foreach(Item item in data)
+            {
+                items.Add(item.idItem, item);
+            }
+
+            return items;
         }
     }
 }

@@ -59,13 +59,13 @@ namespace SeaCaptinGame.Core.Model
             _currentCargo = 0;
             for(int i = 0; i < _cargo.Count; i++)
             {
-                _currentCargo += (_cargo[i].item._weight * _cargo[i].number);
+                _currentCargo += (_cargo[i].item.weight * _cargo[i].number);
             }
         }
 
         public bool CanAdd(Item item, int number)
         {
-            int fullWeight = number * item._weight;
+            int fullWeight = number * item.weight;
             CountCurrentCargo();
             return (fullWeight + _currentCargo <= _maxCargo && number > 0);
         }

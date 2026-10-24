@@ -1,38 +1,38 @@
 [
   {
-    "name": "Wieża",
-    "x": 19,
-    "y": 71,
+    "islandName": "Wieża",
+    "X": 19,
+    "Y": 71,
     "range": 2,
-    "priceFactor": 1.2,
-    "itemsForSale": [ 3 ],
-    "itemsToBuy": [ 1, 4 ]
+    "itemsForSaleId": [ 3, 2 ],
+    "itemsToBuyId": [ 3, 1, 4 ],
+    "priceFactor": 1.2
   },
   {
-    "name": "Kocia Wróżka",
-    "x": 102,
-    "y": 124,
+    "islandName": "Kocia Wróżka",
+    "X": 102,
+    "Y": 124,
     "range": 2,
-    "priceFactor": 1.5,
-    "itemsForSale": [ 2 ],
-    "itemsToBuy": [ 3, 5 ]
+    "itemsForSaleId": [ 2, 4 ],
+    "itemsToBuyId": [ 2, 3, 5 ],
+    "priceFactor": 1.0
   },
   {
-    "name": "Zatoka kupców",
-    "x": 50,
-    "y": 317,
+    "islandName": "Zatoka kupców",
+    "X": 50,
+    "Y": 317,
     "range": 2,
-    "priceFactor": 0.9,
-    "itemsForSale": [ 1, 4, 5 ],
-    "itemsToBuy": [ 2, 3 ]
+    "itemsForSaleId": [ 1, 4, 5, 2 ],
+    "itemsToBuyId": [ 1, 4, 5, 3 ],
+    "priceFactor": 0.9
   },
   {
-    "name": "Port",
-    "x": 50,
-    "y": 187,
+    "islandName": "Port",
+    "X": 50,
+    "Y": 187,
     "range": 2,
-    "priceFactor": 1.0,
-    "itemsForSale": [ 1, 2, 4 ],
-    "itemsToBuy": [ 3, 5 ]
+    "itemsForSaleId": [ 1, 2, 4 ],
+    "itemsToBuyId": [ 1, 3, 5 ],
+    "priceFactor": 1.0
   }
 ]

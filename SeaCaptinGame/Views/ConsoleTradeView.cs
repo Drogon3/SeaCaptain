@@ -18,20 +18,22 @@ namespace SeaCaptinGame.Views
             mainTable.AddColumn("Prawa");
 
             var islandTable = new Table().Expand();
-            islandTable.Title(island._islandName);
+            islandTable.Title(island.islandName);
 
             islandTable.AddColumn("Nazwa");
-            islandTable.AddColumn("Cena");
+            islandTable.AddColumn("Cena Zakupu");
+            islandTable.AddColumn("Cena sprzedaż");
             islandTable.AddColumn("Waga (1 szt.)");
 
-            if(island._itemsForSale != null)
+            if(island.itemsForSale != null)
             {
-                for(int i = 0; i < island._itemsForSale.Count; i++)
+                for(int i = 0; i < island.itemsForSale.Count; i++)
                 {
-                    Item forShort = island._itemsForSale[i];
-                    islandTable.AddRow(ConsoleHelper.ColorItemRarity(forShort._rarity, forShort._itemName),
-                        (forShort._baseValue * island._priceFactor).ToString(),
-                        forShort._weight.ToString());
+                    Item forShort = island.itemsForSale[i];
+                    islandTable.AddRow(ConsoleHelper.ColorItemRarity(forShort.rarity, forShort.itemName),
+                        island.ItemBuyPrice(forShort).ToString(),
+                        island.ItemSalePrice(forShort).ToString(),
+                        forShort.weight.ToString());
                 }
             }
             
@@ -48,10 +50,10 @@ namespace SeaCaptinGame.Views
                 for (int i = 0; i < ship._cargo.Count; i++)
                 {
                     Item forShort = ship._cargo[i].item;
-                    shipTable.AddRow(ConsoleHelper.ColorItemRarity(forShort._rarity, forShort._itemName),
+                    shipTable.AddRow(ConsoleHelper.ColorItemRarity(forShort.rarity, forShort.itemName),
                         ship._cargo[i].number.ToString(),
-                        forShort._weight.ToString(),
-                        (forShort._weight * ship._cargo[i].number).ToString());
+                        forShort.weight.ToString(),
+                        (forShort.weight * ship._cargo[i].number).ToString());
                 }
             }
 

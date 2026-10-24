@@ -16,6 +16,7 @@ namespace SeaCaptinGame.Views
         private ConsoleGameView _gameView;
         private ConosleMinimapView _mapView;
         private ConsoleCargoView _cargoView;
+        private ConsoleTradeView _tradeView;
 
         public ConsoleSeaView()
         {
@@ -23,6 +24,7 @@ namespace SeaCaptinGame.Views
             _gameView = new ConsoleGameView();
             _mapView = new ConosleMinimapView();
             _cargoView = new ConsoleCargoView();
+            _tradeView = new ConsoleTradeView();
         }
 
         public MenuCommands ShowStartMenu() => _startView.ShowMenu();
@@ -36,11 +38,17 @@ namespace SeaCaptinGame.Views
             _mapView.ShowMap();
             _gameView.Redraw();
         }
+        public void ShowStock(Island island, Ship ship)
+        {
+
+        }
         public void ShowCargo(Ship ship)
         {
             _cargoView.ShowCargo(ship);
             _gameView.Redraw();
         }
+
+
         public void Close() => _gameView.Close();
     }
 }
