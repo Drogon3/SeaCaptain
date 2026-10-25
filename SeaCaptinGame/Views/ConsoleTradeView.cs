@@ -14,11 +14,11 @@ namespace SeaCaptinGame.Views
         {
             var mainTable= new Table().Expand();
 
-            mainTable.AddColumn("Lewa");
-            mainTable.AddColumn("Prawa");
+            mainTable.AddColumn(island.islandName);
+            mainTable.AddColumn(ship._shipName);
 
             var islandTable = new Table().Expand();
-            islandTable.Title(island.islandName);
+            //islandTable.Title(island.islandName);
 
             islandTable.AddColumn("Nazwa");
             islandTable.AddColumn("Cena Zakupu");
@@ -38,7 +38,7 @@ namespace SeaCaptinGame.Views
             }
             
             var shipTable = new Table().Expand();
-            shipTable.Title(ship._shipName);
+            //shipTable.Title(ship._shipName);
 
             shipTable.AddColumn("Nazwa");
             shipTable.AddColumn("Ilość");
@@ -58,7 +58,14 @@ namespace SeaCaptinGame.Views
             }
 
             mainTable.AddRow(islandTable, shipTable);
+            Console.Clear();
             AnsiConsole.Write(mainTable);
+
+            while (true)
+            {
+                ConsoleKey key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.T) break;
+            }
 
         }
     }

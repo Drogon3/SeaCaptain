@@ -19,6 +19,7 @@ public class ConsoleGameView
     private Ship _ship;
     private ShipType _shipType;
     private string[] _shipFile;
+    private Island? _nearestIsland;
 
     private int _width, _height;
 
@@ -71,7 +72,7 @@ public class ConsoleGameView
         }
 
         BuildFrame();
-        DrawInfo($"{_ship._shipName} | Współrzędne: {_ship.X}, {_ship.Y} | Ładunek: {_ship._currentCargo} / {_ship._maxCargo} | Monety: {_ship._coins}");
+        DrawInfo(BuildInfoText());
         Flush();
     }
 
@@ -169,6 +170,11 @@ public class ConsoleGameView
         }
         Console.ResetColor();
     }
+    public void SetNearbyIsland(Island? island)
+    {
+        _nearestIsland = island;
+        Render();
+    }
     private bool IsSame(Pixel x, Pixel y)
     {
         return (x.symbol == y.symbol && x.color == y.color);
@@ -207,6 +213,14 @@ public class ConsoleGameView
         }
         _nextFrame[_height - 1, _width - 1] = new Pixel { symbol = '+', color = ConsoleColor.Gray };
     }
+
+    private string BuildInfoText()
+    {
+        string text = $"{_ship._shipName} | Współrzędne: {_ship.X}, {_ship.Y} | Ładunek: {_ship._currentCargo} / {_ship._maxCargo} | Monety: {_ship._coins}";
+        if (_nearestIsland != null)
+            text += $" | [T] - Handluj z {_nearestIsland.islandName}";
+        return text;
+    }
     private static ConsoleColor ColorFor(char symbol)
     {
         switch (symbol)
@@ -234,6 +248,7 @@ public class ConsoleGameView
             case ConsoleKey.S: return GameCommands.South;
             case ConsoleKey.D: return GameCommands.East;
             case ConsoleKey.A: return GameCommands.West;
+            case ConsoleKey.T: return GameCommands.Dock;
             case ConsoleKey.B: return GameCommands.Cargo;
             case ConsoleKey.M: return GameCommands.Map;
             case ConsoleKey.Escape: return GameCommands.Quit;

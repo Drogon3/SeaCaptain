@@ -34,8 +34,15 @@ namespace SeaCaptinGame.Core.Model
         }
         public bool InRange(int shipX, int shipY, int shipDraft)
         {
-            return (Math.Abs(shipX + (shipDraft / 2) - X) < range 
-                || Math.Abs(shipX - (shipDraft / 2) - X) < range);
+            int halfWidth = shipDraft / 2;
+            int halfRange = range / 2;
+            if ((shipX - halfWidth) >= X - halfRange && (shipX - halfWidth) <= X + halfRange
+                && shipY >= Y - halfRange && shipY <= Y + halfRange)
+                return true;
+            else if ((shipX + halfWidth) >= X - halfRange && (shipX + halfWidth) <= X + halfRange
+                && shipY >= Y - halfRange && shipY <= Y + halfRange)
+                return true;
+            return false;
         }
         public bool IsForSale(Item item) => itemsForSale.Contains(item);
         public bool IsToBuy(Item item) => itemsToBuy.Contains(item);

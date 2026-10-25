@@ -16,6 +16,6 @@ public class Program
 
 
         ISeaView view = new ConsoleSeaView();
-        new GameController(view, gameMap).Run();
+        new GameController(view, gameMap, islands).Run();
     }
 }

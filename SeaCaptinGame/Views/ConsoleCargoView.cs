@@ -12,9 +12,6 @@ namespace SeaCaptinGame.Views
     {
         public void ShowCargo(Ship ship)
         {
-            int width = Console.WindowWidth;
-            int height = Console.WindowHeight;
-
             var itemList = ship._cargo;
 
             var cargoTable = new Table();

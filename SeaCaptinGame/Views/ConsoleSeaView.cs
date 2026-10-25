@@ -33,6 +33,8 @@ namespace SeaCaptinGame.Views
 
         public void Init(GameMap map, Ship ship) => _gameView.Init(map, ship);
         public GameCommands ReadCommand() => _gameView.ReadCommand();
+
+        public void SetNearbyIsland(Island? island) => _gameView.SetNearbyIsland(island);
         public void ShowMap()
         {
             _mapView.ShowMap();
@@ -40,7 +42,8 @@ namespace SeaCaptinGame.Views
         }
         public void ShowStock(Island island, Ship ship)
         {
-
+            _tradeView.ShowStock(island, ship);
+            _gameView.Redraw();
         }
         public void ShowCargo(Ship ship)
         {

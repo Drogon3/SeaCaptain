@@ -16,7 +16,10 @@ namespace SeaCaptinGame.Core.View
 
         void Init(GameMap gameMap, Ship ship);
         void ShowMap();
+
+        void SetNearbyIsland(Island? island);
         void ShowStock(Island island, Ship ship);
+
         void ShowCargo(Ship ship);
         GameCommands ReadCommand();
         void Close();

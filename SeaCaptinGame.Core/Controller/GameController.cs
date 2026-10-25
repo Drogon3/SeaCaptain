@@ -15,10 +15,12 @@ namespace SeaCaptinGame.Core.Controller
         private ISeaView _seaView;
         private GameMap _gameMap;
         private List<Island> _islandList;
-        public GameController(ISeaView seaView, GameMap gameMap)
+        private Island? _nearedtIsland;
+        public GameController(ISeaView seaView, GameMap gameMap, List<Island> islandsList)
         {
             _seaView = seaView;
             _gameMap = gameMap;
+            _islandList = islandsList;
         }
 
         public void Run()
@@ -34,6 +36,7 @@ namespace SeaCaptinGame.Core.Controller
 
             _ship = new Ship(_gameMap.StartX, _gameMap.StartY, shipName, shipType, shipDraft);
             _seaView.Init(_gameMap, _ship);
+            CheckForNearestIsland();
 
             bool running = true;
             while (running)
@@ -58,8 +61,8 @@ namespace SeaCaptinGame.Core.Controller
                             _ship.W();
                         break;
                     case GameCommands.Dock:
-                        //if ()
-                        //_seaView.ShowStock(_ship);
+                        if(_nearedtIsland != null)
+                            _seaView.ShowStock(_nearedtIsland, _ship);
                         break;
                     case GameCommands.Cargo:
                         _seaView.ShowCargo(_ship);
@@ -71,6 +74,8 @@ namespace SeaCaptinGame.Core.Controller
                         running = false;
                         break;
                 }
+                if (running)
+                    CheckForNearestIsland();
             }
             _seaView.Close();
         }
@@ -94,6 +99,20 @@ namespace SeaCaptinGame.Core.Controller
                         return (shipType, shipDraft, shipName);
                 }
             }
+        }
+        private void CheckForNearestIsland()
+        {
+
+            foreach(Island island in _islandList)
+            {
+                if (island.InRange(_ship.X, _ship.Y, _ship._shipDraft))
+                {
+                    _nearedtIsland = island;
+                    break;
+                }
+                else _nearedtIsland = null;
+            }
+            _seaView.SetNearbyIsland(_nearedtIsland);
         }
     }
 }
