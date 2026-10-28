@@ -216,7 +216,7 @@ public class ConsoleGameView
 
     private string BuildInfoText()
     {
-        string text = $"{_ship._shipName} | Współrzędne: {_ship.X}, {_ship.Y} | Ładunek: {_ship._currentCargo} / {_ship._maxCargo} | Monety: {_ship._coins}";
+        string text = $"{_ship._shipName} | Współrzędne: {_ship.X}, {_ship.Y} | Ładunek: {_ship._currentCargo} / {_ship._maxCargo} | Monety: {Math.Round(_ship._coins,2)}";
         if (_nearestIsland != null)
             text += $" | [T] - Handluj z {_nearestIsland.islandName}";
         return text;

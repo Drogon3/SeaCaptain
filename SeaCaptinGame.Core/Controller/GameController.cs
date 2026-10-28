@@ -4,6 +4,7 @@ using SeaCaptinGame.Core.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -62,7 +63,12 @@ namespace SeaCaptinGame.Core.Controller
                         break;
                     case GameCommands.Dock:
                         if(_nearedtIsland != null)
-                            _seaView.ShowStock(_nearedtIsland, _ship);
+                        {
+                            _seaView.ShowStock(_nearedtIsland, _ship, action =>
+                                action.Kind == TradeActionKind.Buy
+                                    ? Trade.Buy(_ship, _nearedtIsland, action.Item, action.number)
+                                    : Trade.Sell(_ship, _nearedtIsland, action.Item, action.number));
+                        }
                         break;
                     case GameCommands.Cargo:
                         _seaView.ShowCargo(_ship);

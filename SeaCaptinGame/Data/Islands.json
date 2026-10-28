@@ -13,7 +13,7 @@
     "X": 124,
     "Y": 102,
     "range": 15,
-    "itemsForSaleId": [ 2, 4 ],
+    "itemsForSaleId": [ 2, 4, 7 ],
     "itemsToBuyId": [ 2, 3, 5 ],
     "priceFactor": 1.0
   },

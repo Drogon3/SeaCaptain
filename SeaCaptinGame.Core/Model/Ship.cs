@@ -23,10 +23,10 @@ namespace SeaCaptinGame.Core.Model
         public string _shipName { get; private set; }
         public int _maxCargo { get; private set; }  
         public int _currentCargo { get; private set; }  
-        public float _coins { get; private set; }        
+        public double _coins { get; private set; }        
         public int _shipDraft { get; private set; } // zanurzona część statku 
         public ShipType _shipType { get; }
-        public List<(Item item, int number)> _cargo { get; set; }
+        public List<(Item item, int number)> _cargo { get; private set; } = new();
 
         public Ship(int x, int y, string shipName, ShipType shipType, int shipDraft)
         {
@@ -35,7 +35,7 @@ namespace SeaCaptinGame.Core.Model
             _shipName = shipName;
             _shipType = shipType;
             _shipDraft = shipDraft;
-            _coins = 100;
+            _coins = 500;
             _currentCargo = 0;
 
             switch (shipType)
@@ -62,12 +62,71 @@ namespace SeaCaptinGame.Core.Model
                 _currentCargo += (_cargo[i].item.weight * _cargo[i].number);
             }
         }
+        public int FreeSpace => _maxCargo - _currentCargo;
 
-        public bool CanAdd(Item item, int number)
+        public int CountOf(Item item)
+        {
+            for(int i = 0; i < _cargo.Count; i++)
+            {
+                if (_cargo[i].item == item) return _cargo[i].number;
+            }
+            return 0;
+        }
+        public void AddCoins(double amount)
+        {
+            _coins += Math.Round(amount, 2);
+        }
+        public bool TrySpendCoins(double amount)
+        {
+            if(amount < 0 || amount > _coins) return false;
+            _coins -= Math.Round(amount, 2);
+            return true;
+        }
+
+
+        public bool CanAddItem(Item item, int number)
         {
             int fullWeight = number * item.weight;
+            int found = -1;
             CountCurrentCargo();
-            return (fullWeight + _currentCargo <= _maxCargo && number > 0);
+
+            if(fullWeight + _currentCargo <= _maxCargo && number > 0)
+            {
+                for(int i = 0; i < _cargo.Count; i++)
+                {
+                    if (_cargo[i].item == item) found = i;
+                }
+                if(found >= 0) _cargo[found] = (item, _cargo[found].number + number);
+                else _cargo.Add((item, number));
+
+                _currentCargo += item.weight * number;
+
+                return true;
+            }
+            else return false;
+        }
+        public bool CanRemoveItem(Item item, int number)
+        {
+            int found = -1;
+            CountCurrentCargo();
+
+            for (int i = 0; i < _cargo.Count; i++)
+            {
+                if (_cargo[i].item == item) found = i;
+            }
+            if(number == _cargo[found].number)
+            {
+                _currentCargo -= item.weight * number;
+                _cargo.RemoveAt(found);
+                return true;
+            }
+
+            if (number <= _cargo[found].number) _cargo[found] = (item, _cargo[found].number - number);
+            else return false;
+
+            _currentCargo -= item.weight * number;
+            return true;
+
         }
 
         public event Action<int, int, int, int>? Moved;

@@ -40,9 +40,9 @@ namespace SeaCaptinGame.Views
             _mapView.ShowMap();
             _gameView.Redraw();
         }
-        public void ShowStock(Island island, Ship ship)
+        public void ShowStock(Island island, Ship ship, Func<TradeAction, TradeResult> execute)
         {
-            _tradeView.ShowStock(island, ship);
+            _tradeView.ShowStock(island, ship, execute);
             _gameView.Redraw();
         }
         public void ShowCargo(Ship ship)

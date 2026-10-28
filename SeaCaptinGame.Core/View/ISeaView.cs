@@ -18,7 +18,7 @@ namespace SeaCaptinGame.Core.View
         void ShowMap();
 
         void SetNearbyIsland(Island? island);
-        void ShowStock(Island island, Ship ship);
+        void ShowStock(Island island, Ship ship, Func<TradeAction, TradeResult> execute);
 
         void ShowCargo(Ship ship);
         GameCommands ReadCommand();

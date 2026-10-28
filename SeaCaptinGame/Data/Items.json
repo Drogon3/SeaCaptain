@@ -16,7 +16,7 @@
   {
     "idItem": 3,
     "itemName": "Ryba",
-    "baseValue": 50,
+    "baseValue": 5,
     "weight": 3,
     "rarity": "Common"
   },
@@ -40,5 +40,12 @@
     "baseValue": 10,
     "weight": 2,
     "rarity": "Common"
+  },
+  {
+    "idItem": 7,
+    "itemName": "Złoty Hak",
+    "baseValue": 50,
+    "weight": 10,
+    "rarity": "Epic"
   }
 ]
